@@ -1,0 +1,23 @@
+services:
+  mysql-container:
+    image: mysql:8
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdb
+    ports:
+      - "3308:3306"
+    networks:
+      - microservice-network
+  authservice:
+    build: .
+    container_name: authservice-container
+    ports:
+      - "8091:8091"
+    depends_on:
+      - mysql-container
+    networks:
+      - microservice-network
+networks:
+  microservice-network:
+
